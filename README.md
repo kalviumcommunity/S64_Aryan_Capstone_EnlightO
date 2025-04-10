@@ -161,9 +161,9 @@ Implementing live video sessions.
 Adding a certificate generation feature upon course completion
 Course completion progress tracker.
 Implement forgot password and reCaptcha.
-
+ 
+  
+   
 
 
 This document will be updated as the project progresses. Please review and provide feedback!
-
-
