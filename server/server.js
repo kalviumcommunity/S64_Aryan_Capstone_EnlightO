@@ -13,6 +13,10 @@ app.use((err,req,res,next)=> {
     })
 })
 
+app.get('/',(req,res) => {
+    res.send('Website is running...');
+});
+
 app.listen(PORT,()=>{
     console.log(`server is now running on port ${PORT}`)
 })
