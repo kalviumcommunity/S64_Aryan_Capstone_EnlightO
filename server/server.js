@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require('express');
 const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
-
+const authRoutes = require('./routes/authRoutes');
 const app = express();
 const PORT = 5005;
 
@@ -12,6 +12,7 @@ app.use(express.json()); // Allows you to parse JSON in request body
 
 // Routes
 app.use('/api/users', userRoutes);
+app.use('/api/auth', authRoutes);
 
 const mongoose = require('mongoose');
 
