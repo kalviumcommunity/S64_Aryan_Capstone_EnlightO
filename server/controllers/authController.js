@@ -1,5 +1,9 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+// environment secret 
+const JWT_SECRET = process.env.JWT_SECRET ;
 
 // Register Controller
 exports.register = async (req, res) => {
@@ -40,7 +44,7 @@ exports.register = async (req, res) => {
   }
 };
 
-// Login Controller
+// Login Controller with JWT
 exports.login = async (req, res) => {
   try {
     const { userEmail, password } = req.body;
@@ -57,10 +61,18 @@ exports.login = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Invalid email or password' });
     }
 
+    // Create JWT
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      JWT_SECRET,
+      { expiresIn: '7d' } // You can adjust token duration
+    );
+
     res.status(200).json({
       success: true,
       message: 'Login successful',
-      data: {
+      token, // send token to client
+      user: {
         id: user._id,
         userName: user.userName,
         userEmail: user.userEmail,

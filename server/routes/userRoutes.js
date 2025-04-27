@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const requireAuth = require('../middleware/authMiddleware');
 
 // GET /api/users - fetch all users
 router.get('/', async (req, res) => {
@@ -77,5 +78,15 @@ router.post('/', async (req, res) => {
       });
     }
   });
+
+// GET /api/users/me - protected route
+router.get('/me', requireAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    res.status(200).json({ success: true, data: user });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server error', error: error.message });
+  }
+});
 
 module.exports = router;
