@@ -1,7 +1,13 @@
 import axios from "axios";
 
+// Automatically detect environment and use appropriate backend URL
+const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const API_BASE_URL = isLocalhost 
+  ? "http://localhost:50000" 
+  : "https://s64-aryan-capstone-enlighto.onrender.com";
+
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:50000",
+  baseURL: API_BASE_URL,
 });
 
 axiosInstance.interceptors.request.use(
